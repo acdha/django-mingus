@@ -1,3 +1,5 @@
+* django-basic-apps added two field to basic.settings: active_editor and
+  excerpt_length. You can migrate something like this:
 
-
-* added two field to basic.settings: active_editor,excerpt_length
+  ALTER TABLE blog_settings ADD COLUMN "active_editor" integer NOT NULL DEFAULT 1;
+  ALTER TABLE blog_settings ADD COLUMN "excerpt_length" integer NOT NULL DEFAULT 500;
