@@ -1,5 +1,5 @@
 {% extends "blog/base_blog.html" %}
-{% load blog tagging_tags inlines cache pygment_tags oembed_tags i18n tagging_related pygment_tags %}
+{% load blog tagging_tags inlines cache oembed_tags i18n tagging_related pygment_tags text_tags %}
 
 {% block title %}{{ object.title }} | {{ block.super }}{% endblock %}
 
@@ -33,9 +33,8 @@
     <p class="teaser">{{ object.tease|safe }}</p>
     {% endif %}
     <div class="body">
-	{% load text_tags %}
       {% oembed %}
-      {{ object.body_markup|render_inlines|safe}}
+      {{ object.body_markup|render_inlines|safe }}
       {% endoembed %}
     </div>
   </div>
