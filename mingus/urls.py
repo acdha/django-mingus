@@ -78,9 +78,7 @@ urlpatterns += patterns('',
 )
 
 
-from django.conf import settings
-if settings.DEBUG:
+if settings.DEBUG or settings.LOCAL_DEV:
     urlpatterns += patterns('', 
         (r'', include('staticfiles.urls')),
     )
-
