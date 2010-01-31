@@ -2,7 +2,7 @@ Note: I neglected to keep a CHANGELOG until 0.9 release which is noted below.
 
 1.30.10
 -------
-
+* added django-memcached-status
 * small change to loaddata instructions in docs
 * bumped django-proxy and django-quoteme versions
 * update to quoteme template
@@ -11,7 +11,7 @@ Note: I neglected to keep a CHANGELOG until 0.9 release which is noted below.
 
 1.30.10
 -------
-* fixed the bug I introduced on 1.28.10 to the `fixtures/test_data.json`
+* fixed the bug I introduced on 1.28.10 to the fixtures/test_data.json
 
 
 1.29.10
