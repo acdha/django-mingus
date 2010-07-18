@@ -14,6 +14,11 @@ class TaggedGetRelatedNode(Node):
     def render(self, context):
         try:
             param = get_model(*self.queryset_or_model.split('.'))
+
+            # Models like Post which use a published manager will want that to
+            # be used to exclude items which are not supposed to be visible:
+            if hasattr(getattr(param, "objects"), "published"):
+                param = param.objects.published()
         except:
             param = Variable(self.queryset_or_model).resolve(context)
 
