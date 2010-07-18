@@ -59,7 +59,6 @@ INSTALLED_APPS = (
   'django.contrib.flatpages',
   'django.contrib.redirects',
 
-  'django_extensions',
   'tagging',
   'djangodblog',
   'disqus',
@@ -85,8 +84,7 @@ INSTALLED_APPS = (
   'sugar',
   'quoteme',
   'mingus.core',
-  'debug_toolbar',
-  
+
   'django_twitter',
   'django_bitly',
   'staticfiles',
