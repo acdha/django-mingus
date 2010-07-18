@@ -83,6 +83,6 @@ urlpatterns += patterns('',
 
 
 if settings.DEBUG or settings.LOCAL_DEV:
-    urlpatterns += patterns('', 
+    urlpatterns += patterns('',
         (r'', include('staticfiles.urls')),
     )

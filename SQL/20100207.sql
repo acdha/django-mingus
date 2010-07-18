@@ -14,7 +14,7 @@ ALTER TABLE request_request
 update request_request set referer_new = referer;
 
 ALTER TABLE request_request
-	DROP COLUMN referer;
+    DROP COLUMN referer;
 
 ALTER TABLE request_request
-	RENAME COLUMN referer_new to referer;
+    RENAME COLUMN referer_new to referer;

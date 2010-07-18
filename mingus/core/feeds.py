@@ -45,13 +45,13 @@ class AllEntries(Feed):
 
 
 class ByTag(AllEntries):
-    
+
     @property
     def settings(self):
         if self._settings is None:
             self._settings = Settings.get_current()
         return self._settings
-        
+
 
     def title(self):
         return '%s all entries feed' % self.settings.site_name

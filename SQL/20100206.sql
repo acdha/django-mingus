@@ -14,7 +14,7 @@ ALTER TABLE request_request
 update request_request set language_new = language;
 
 ALTER TABLE request_request
-	DROP COLUMN language;
+    DROP COLUMN language;
 
 ALTER TABLE request_request
-	RENAME COLUMN language_new to language;
+    RENAME COLUMN language_new to language;

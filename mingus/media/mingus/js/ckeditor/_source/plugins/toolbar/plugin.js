@@ -10,280 +10,280 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
 (function()
 {
-	var toolbox = function()
-	{
-		this.toolbars = [];
-		this.focusCommandExecuted = false;
-	};
+    var toolbox = function()
+    {
+        this.toolbars = [];
+        this.focusCommandExecuted = false;
+    };
 
-	toolbox.prototype.focus = function()
-	{
-		for ( var t = 0, toolbar ; toolbar = this.toolbars[ t++ ] ; )
-		{
-			for ( var i = 0, item ; item = toolbar.items[ i++ ] ; )
-			{
-				if ( item.focus )
-				{
-					item.focus();
-					return;
-				}
-			}
-		}
-	};
+    toolbox.prototype.focus = function()
+    {
+        for ( var t = 0, toolbar ; toolbar = this.toolbars[ t++ ] ; )
+        {
+            for ( var i = 0, item ; item = toolbar.items[ i++ ] ; )
+            {
+                if ( item.focus )
+                {
+                    item.focus();
+                    return;
+                }
+            }
+        }
+    };
 
-	var commands =
-	{
-		toolbarFocus :
-		{
-			modes : { wysiwyg : 1, source : 1 },
+    var commands =
+    {
+        toolbarFocus :
+        {
+            modes : { wysiwyg : 1, source : 1 },
 
-			exec : function( editor )
-			{
-				if ( editor.toolbox )
-				{
-					editor.toolbox.focusCommandExecuted = true;
+            exec : function( editor )
+            {
+                if ( editor.toolbox )
+                {
+                    editor.toolbox.focusCommandExecuted = true;
 
-					// Make the first button focus accessible. (#3417)
-					if ( CKEDITOR.env.ie )
-						setTimeout( function(){ editor.toolbox.focus(); }, 100 );
-					else
-						editor.toolbox.focus();
-				}
-			}
-		}
-	};
+                    // Make the first button focus accessible. (#3417)
+                    if ( CKEDITOR.env.ie )
+                        setTimeout( function(){ editor.toolbox.focus(); }, 100 );
+                    else
+                        editor.toolbox.focus();
+                }
+            }
+        }
+    };
 
-	CKEDITOR.plugins.add( 'toolbar',
-	{
-		init : function( editor )
-		{
-			var itemKeystroke = function( item, keystroke )
-			{
-				switch ( keystroke )
-				{
-					case 39 :					// RIGHT-ARROW
-					case 9 :					// TAB
-						// Look for the next item in the toolbar.
-						while ( ( item = item.next || ( item.toolbar.next && item.toolbar.next.items[ 0 ] ) ) && !item.focus )
-						{ /*jsl:pass*/ }
+    CKEDITOR.plugins.add( 'toolbar',
+    {
+        init : function( editor )
+        {
+            var itemKeystroke = function( item, keystroke )
+            {
+                switch ( keystroke )
+                {
+                    case 39 :                    // RIGHT-ARROW
+                    case 9 :                    // TAB
+                        // Look for the next item in the toolbar.
+                        while ( ( item = item.next || ( item.toolbar.next && item.toolbar.next.items[ 0 ] ) ) && !item.focus )
+                        { /*jsl:pass*/ }
 
-						// If available, just focus it, otherwise focus the
-						// first one.
-						if ( item )
-							item.focus();
-						else
-							editor.toolbox.focus();
+                        // If available, just focus it, otherwise focus the
+                        // first one.
+                        if ( item )
+                            item.focus();
+                        else
+                            editor.toolbox.focus();
 
-						return false;
+                        return false;
 
-					case 37 :					// LEFT-ARROW
-					case CKEDITOR.SHIFT + 9 :	// SHIFT + TAB
-						// Look for the previous item in the toolbar.
-						while ( ( item = item.previous || ( item.toolbar.previous && item.toolbar.previous.items[ item.toolbar.previous.items.length - 1 ] ) ) && !item.focus )
-						{ /*jsl:pass*/ }
+                    case 37 :                    // LEFT-ARROW
+                    case CKEDITOR.SHIFT + 9 :    // SHIFT + TAB
+                        // Look for the previous item in the toolbar.
+                        while ( ( item = item.previous || ( item.toolbar.previous && item.toolbar.previous.items[ item.toolbar.previous.items.length - 1 ] ) ) && !item.focus )
+                        { /*jsl:pass*/ }
 
-						// If available, just focus it, otherwise focus the
-						// last one.
-						if ( item )
-							item.focus();
-						else
-						{
-							var lastToolbarItems = editor.toolbox.toolbars[ editor.toolbox.toolbars.length - 1 ].items;
-							lastToolbarItems[ lastToolbarItems.length - 1 ].focus();
-						}
+                        // If available, just focus it, otherwise focus the
+                        // last one.
+                        if ( item )
+                            item.focus();
+                        else
+                        {
+                            var lastToolbarItems = editor.toolbox.toolbars[ editor.toolbox.toolbars.length - 1 ].items;
+                            lastToolbarItems[ lastToolbarItems.length - 1 ].focus();
+                        }
 
-						return false;
+                        return false;
 
-					case 27 :					// ESC
-						editor.focus();
-						return false;
+                    case 27 :                    // ESC
+                        editor.focus();
+                        return false;
 
-					case 13 :					// ENTER
-					case 32 :					// SPACE
-						item.execute();
-						return false;
-				}
-				return true;
-			};
+                    case 13 :                    // ENTER
+                    case 32 :                    // SPACE
+                        item.execute();
+                        return false;
+                }
+                return true;
+            };
 
-			editor.on( 'themeSpace', function( event )
-				{
-					if ( event.data.space == editor.config.toolbarLocation )
-					{
-						editor.toolbox = new toolbox();
+            editor.on( 'themeSpace', function( event )
+                {
+                    if ( event.data.space == editor.config.toolbarLocation )
+                    {
+                        editor.toolbox = new toolbox();
 
-						var output = [ '<div class="cke_toolbox"' ],
-							expanded =  editor.config.toolbarStartupExpanded !== false,
-							groupStarted;
+                        var output = [ '<div class="cke_toolbox"' ],
+                            expanded =  editor.config.toolbarStartupExpanded !== false,
+                            groupStarted;
 
-						output.push( expanded ? '>' : ' style="display:none">' );
+                        output.push( expanded ? '>' : ' style="display:none">' );
 
-						var toolbars = editor.toolbox.toolbars,
-							toolbar =
-									( editor.config.toolbar instanceof Array ) ?
-										editor.config.toolbar
-									:
-										editor.config[ 'toolbar_' + editor.config.toolbar ];
+                        var toolbars = editor.toolbox.toolbars,
+                            toolbar =
+                                    ( editor.config.toolbar instanceof Array ) ?
+                                        editor.config.toolbar
+                                    :
+                                        editor.config[ 'toolbar_' + editor.config.toolbar ];
 
-						for ( var r = 0 ; r < toolbar.length ; r++ )
-						{
-							var row = toolbar[ r ];
+                        for ( var r = 0 ; r < toolbar.length ; r++ )
+                        {
+                            var row = toolbar[ r ];
 
-							// It's better to check if the row object is really
-							// available because it's a common mistake to leave
-							// an extra comma in the toolbar definition
-							// settings, which leads on the editor not loading
-							// at all in IE. (#3983)
-							if ( !row )
-								continue;
+                            // It's better to check if the row object is really
+                            // available because it's a common mistake to leave
+                            // an extra comma in the toolbar definition
+                            // settings, which leads on the editor not loading
+                            // at all in IE. (#3983)
+                            if ( !row )
+                                continue;
 
-							var toolbarId = 'cke_' + CKEDITOR.tools.getNextNumber(),
-								toolbarObj = { id : toolbarId, items : [] };
+                            var toolbarId = 'cke_' + CKEDITOR.tools.getNextNumber(),
+                                toolbarObj = { id : toolbarId, items : [] };
 
-							if ( groupStarted )
-							{
-								output.push( '</div>' );
-								groupStarted = 0;
-							}
+                            if ( groupStarted )
+                            {
+                                output.push( '</div>' );
+                                groupStarted = 0;
+                            }
 
-							if ( row === '/' )
-							{
-								output.push( '<div class="cke_break"></div>' );
-								continue;
-							}
+                            if ( row === '/' )
+                            {
+                                output.push( '<div class="cke_break"></div>' );
+                                continue;
+                            }
 
-							output.push( '<span id="', toolbarId, '" class="cke_toolbar"><span class="cke_toolbar_start"></span>' );
+                            output.push( '<span id="', toolbarId, '" class="cke_toolbar"><span class="cke_toolbar_start"></span>' );
 
-							// Add the toolbar to the "editor.toolbox.toolbars"
-							// array.
-							var index = toolbars.push( toolbarObj ) - 1;
+                            // Add the toolbar to the "editor.toolbox.toolbars"
+                            // array.
+                            var index = toolbars.push( toolbarObj ) - 1;
 
-							// Create the next/previous reference.
-							if ( index > 0 )
-							{
-								toolbarObj.previous = toolbars[ index - 1 ];
-								toolbarObj.previous.next = toolbarObj;
-							}
+                            // Create the next/previous reference.
+                            if ( index > 0 )
+                            {
+                                toolbarObj.previous = toolbars[ index - 1 ];
+                                toolbarObj.previous.next = toolbarObj;
+                            }
 
-							// Create all items defined for this toolbar.
-							for ( var i = 0 ; i < row.length ; i++ )
-							{
-								var item,
-									itemName = row[ i ];
+                            // Create all items defined for this toolbar.
+                            for ( var i = 0 ; i < row.length ; i++ )
+                            {
+                                var item,
+                                    itemName = row[ i ];
 
-								if ( itemName == '-' )
-									item = CKEDITOR.ui.separator;
-								else
-									item = editor.ui.create( itemName );
+                                if ( itemName == '-' )
+                                    item = CKEDITOR.ui.separator;
+                                else
+                                    item = editor.ui.create( itemName );
 
-								if ( item )
-								{
-									if ( item.canGroup )
-									{
-										if ( !groupStarted )
-										{
-											output.push( '<span class="cke_toolgroup">' );
-											groupStarted = 1;
-										}
-									}
-									else if ( groupStarted )
-									{
-										output.push( '</span>' );
-										groupStarted = 0;
-									}
+                                if ( item )
+                                {
+                                    if ( item.canGroup )
+                                    {
+                                        if ( !groupStarted )
+                                        {
+                                            output.push( '<span class="cke_toolgroup">' );
+                                            groupStarted = 1;
+                                        }
+                                    }
+                                    else if ( groupStarted )
+                                    {
+                                        output.push( '</span>' );
+                                        groupStarted = 0;
+                                    }
 
-									var itemObj = item.render( editor, output );
-									index = toolbarObj.items.push( itemObj ) - 1;
+                                    var itemObj = item.render( editor, output );
+                                    index = toolbarObj.items.push( itemObj ) - 1;
 
-									if ( index > 0 )
-									{
-										itemObj.previous = toolbarObj.items[ index - 1 ];
-										itemObj.previous.next = itemObj;
-									}
+                                    if ( index > 0 )
+                                    {
+                                        itemObj.previous = toolbarObj.items[ index - 1 ];
+                                        itemObj.previous.next = itemObj;
+                                    }
 
-									itemObj.toolbar = toolbarObj;
-									itemObj.onkey = itemKeystroke;
+                                    itemObj.toolbar = toolbarObj;
+                                    itemObj.onkey = itemKeystroke;
 
-									/*
-									 * Fix for #3052:
-									 * Prevent JAWS from focusing the toolbar after document load.
-									 */
-									itemObj.onfocus = function()
-									{
-										if ( !editor.toolbox.focusCommandExecuted )
-											editor.focus();
-									};
-								}
-							}
+                                    /*
+                                     * Fix for #3052:
+                                     * Prevent JAWS from focusing the toolbar after document load.
+                                     */
+                                    itemObj.onfocus = function()
+                                    {
+                                        if ( !editor.toolbox.focusCommandExecuted )
+                                            editor.focus();
+                                    };
+                                }
+                            }
 
-							if ( groupStarted )
-							{
-								output.push( '</span>' );
-								groupStarted = 0;
-							}
+                            if ( groupStarted )
+                            {
+                                output.push( '</span>' );
+                                groupStarted = 0;
+                            }
 
-							output.push( '<span class="cke_toolbar_end"></span></span>' );
-						}
+                            output.push( '<span class="cke_toolbar_end"></span></span>' );
+                        }
 
-						output.push( '</div>' );
+                        output.push( '</div>' );
 
-						if ( editor.config.toolbarCanCollapse )
-						{
-							var collapserFn = CKEDITOR.tools.addFunction(
-								function()
-								{
-									editor.execCommand( 'toolbarCollapse' );
-								} );
+                        if ( editor.config.toolbarCanCollapse )
+                        {
+                            var collapserFn = CKEDITOR.tools.addFunction(
+                                function()
+                                {
+                                    editor.execCommand( 'toolbarCollapse' );
+                                } );
 
-							var collapserId = 'cke_' + CKEDITOR.tools.getNextNumber();
+                            var collapserId = 'cke_' + CKEDITOR.tools.getNextNumber();
 
-							editor.addCommand( 'toolbarCollapse',
-								{
-									exec : function( editor )
-									{
-										var collapser = CKEDITOR.document.getById( collapserId );
-										var toolbox = collapser.getPrevious();
-										var contents = editor.getThemeSpace( 'contents' );
-										var toolboxContainer = toolbox.getParent();
-										var contentHeight = parseInt( contents.$.style.height, 10 );
-										var previousHeight = toolboxContainer.$.offsetHeight;
+                            editor.addCommand( 'toolbarCollapse',
+                                {
+                                    exec : function( editor )
+                                    {
+                                        var collapser = CKEDITOR.document.getById( collapserId );
+                                        var toolbox = collapser.getPrevious();
+                                        var contents = editor.getThemeSpace( 'contents' );
+                                        var toolboxContainer = toolbox.getParent();
+                                        var contentHeight = parseInt( contents.$.style.height, 10 );
+                                        var previousHeight = toolboxContainer.$.offsetHeight;
 
-										if ( toolbox.isVisible() )
-										{
-											toolbox.hide();
-											collapser.addClass( 'cke_toolbox_collapser_min' );
-											collapser.setAttribute( 'title', editor.lang.toolbarExpand );
-										}
-										else
-										{
-											toolbox.show();
-											collapser.removeClass( 'cke_toolbox_collapser_min' );
-											collapser.setAttribute( 'title', editor.lang.toolbarCollapse );
-										}
+                                        if ( toolbox.isVisible() )
+                                        {
+                                            toolbox.hide();
+                                            collapser.addClass( 'cke_toolbox_collapser_min' );
+                                            collapser.setAttribute( 'title', editor.lang.toolbarExpand );
+                                        }
+                                        else
+                                        {
+                                            toolbox.show();
+                                            collapser.removeClass( 'cke_toolbox_collapser_min' );
+                                            collapser.setAttribute( 'title', editor.lang.toolbarCollapse );
+                                        }
 
-										var dy = toolboxContainer.$.offsetHeight - previousHeight;
-										contents.setStyle( 'height', ( contentHeight - dy ) + 'px' );
-									},
+                                        var dy = toolboxContainer.$.offsetHeight - previousHeight;
+                                        contents.setStyle( 'height', ( contentHeight - dy ) + 'px' );
+                                    },
 
-									modes : { wysiwyg : 1, source : 1 }
-								} );
+                                    modes : { wysiwyg : 1, source : 1 }
+                                } );
 
-							output.push( '<a title="' + ( expanded ? editor.lang.toolbarCollapse : editor.lang.toolbarExpand )
-													  + '" id="' + collapserId + '" class="cke_toolbox_collapser' );
+                            output.push( '<a title="' + ( expanded ? editor.lang.toolbarCollapse : editor.lang.toolbarExpand )
+                                                      + '" id="' + collapserId + '" class="cke_toolbox_collapser' );
 
-							if ( !expanded )
-								output.push( ' cke_toolbox_collapser_min' );
+                            if ( !expanded )
+                                output.push( ' cke_toolbox_collapser_min' );
 
-							output.push( '" onclick="CKEDITOR.tools.callFunction(' + collapserFn + ')"></a>' );
-						}
+                            output.push( '" onclick="CKEDITOR.tools.callFunction(' + collapserFn + ')"></a>' );
+                        }
 
-						event.data.html += output.join( '' );
-					}
-				});
+                        event.data.html += output.join( '' );
+                    }
+                });
 
-			editor.addCommand( 'toolbarFocus', commands.toolbarFocus );
-		}
-	});
+            editor.addCommand( 'toolbarFocus', commands.toolbarFocus );
+        }
+    });
 })();
 
 /**
@@ -293,11 +293,11 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 CKEDITOR.ui.separator =
 {
-	render : function( editor, output )
-	{
-		output.push( '<span class="cke_separator"></span>' );
-		return {};
-	}
+    render : function( editor, output )
+    {
+        output.push( '<span class="cke_separator"></span>' );
+        return {};
+    }
 };
 
 /**
@@ -331,7 +331,7 @@ CKEDITOR.config.toolbarLocation = 'top';
  */
 CKEDITOR.config.toolbar_Basic =
 [
-	['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink','-','About']
+    ['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink','-','About']
 ];
 
 /**
@@ -361,20 +361,20 @@ CKEDITOR.config.toolbar_Basic =
  */
 CKEDITOR.config.toolbar_Full =
 [
-	['Source','-','Save','NewPage','Preview','-','Templates'],
-	['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print', 'SpellChecker', 'Scayt'],
-	['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
-	['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField'],
-	'/',
-	['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
-	['NumberedList','BulletedList','-','Outdent','Indent','Blockquote','CreateDiv'],
-	['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
-	['Link','Unlink','Anchor'],
-	['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
-	'/',
-	['Styles','Format','Font','FontSize'],
-	['TextColor','BGColor'],
-	['Maximize', 'ShowBlocks','-','About']
+    ['Source','-','Save','NewPage','Preview','-','Templates'],
+    ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print', 'SpellChecker', 'Scayt'],
+    ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
+    ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField'],
+    '/',
+    ['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
+    ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote','CreateDiv'],
+    ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+    ['Link','Unlink','Anchor'],
+    ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+    '/',
+    ['Styles','Format','Font','FontSize'],
+    ['TextColor','BGColor'],
+    ['Maximize', 'ShowBlocks','-','About']
 ];
 
 /**
