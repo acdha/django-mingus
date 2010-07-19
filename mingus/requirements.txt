@@ -25,7 +25,12 @@ http://bitbucket.org/ubernostrum/django-template-utils/get/a47ea387c393.bz2
 http://github.com/acdha/django-basic-apps/tarball/master#egg=basic
 http://github.com/acdha/django-sugar/tarball/master#egg=sugar
 http://github.com/bartTC/django-markup/tarball/master#egg=django_markup
-http://github.com/clintecker/django-google-analytics/tarball/d28bca4de2dc2a955138d36f2ae7ea86917e4867#egg=google_analytics
+
+# This is the real upstream:
+# http://github.com/clintecker/django-google-analytics/tarball/d28bca4de2dc2a955138d36f2ae7ea86917e4867#egg=google_analytics
+# this version has working async code:
+http://github.com/acdha/django-google-analytics/tarball/b06fc598b213d0053bfa#google_analytics
+
 http://github.com/kylef/django-request/tarball/master#egg=request
 http://github.com/mintchaos/django_compressor/tarball/master#egg=compressor
 http://github.com/montylounge/django-disqus/tarball/master#egg=disqus
