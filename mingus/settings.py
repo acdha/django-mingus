@@ -6,7 +6,7 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '/admin_media/'
 
-#staticfiles app values
+# staticfiles app values
 STATIC_URL = '/media/mingus/'
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'media')
 STATICFILES_DIRS = (
@@ -16,13 +16,9 @@ STATICFILES_DIRS = (
 SITE_ID = 1
 ROOT_URLCONF = 'mingus.urls'
 TIME_ZONE = 'America/New_York'
-SECRET_KEY = '+bq@o(jph^-*sfj4j%xukecxb0jae9lci&ysy=609hj@(l$47c'
 USE_I18N = False
-HONEYPOT_FIELD_NAME = 'fonzie_kungfu'
 
-TEMPLATE_DIRS = (
-  os.path.join(PROJECT_ROOT, "templates"),
-)
+TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, "templates"), )
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -33,8 +29,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'slimmer.middleware.CompressHtmlMiddleware',
     'sugar.middleware.debugging.UserBasedExceptionMiddleware',
-    'request.middleware.RequestMiddleware',
-    'djangodblog.DBLogMiddleware',
+    'sugar.cache.middleware.HTTPCacheControlMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -91,8 +86,11 @@ INSTALLED_APPS = (
   'django_wysiwyg',
   'cropper',
   'memcache_status',
-  'request',
-)
+
+  'indexer',
+  'paging',
+  'sentry',
+  'sentry.client')
 
 
 TINYMCE_JS_URL = STATIC_URL + 'js/tiny_mce/tiny_mce.js'
@@ -106,7 +104,7 @@ TINYMCE_DEFAULT_CONFIG = {
 DJANGO_WYSIWYG_MEDIA_URL = STATIC_URL + "js/ckeditor/"
 DJANGO_WYSIWYG_FLAVOR = "ckeditor"
 
-try:
-   from local_settings import *
-except ImportError:
-   pass
+DEFAULT_HTTP_CACHE_CONTROL = {"public": True, "max_age": 300}
+
+CACHE_MIDDLEWARE_KEY_PREFIX = 'mingus.'
+CACHE_MIDDLEWARE_ANONYMOUS_ONLY = True
