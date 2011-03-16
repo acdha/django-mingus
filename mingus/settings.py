@@ -4,6 +4,8 @@ import os
 PROJECT_ROOT = os.path.dirname(__file__)
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, 'static'), )
 ADMIN_MEDIA_PREFIX = '/admin_media/'
 
 SITE_ID = 1
@@ -34,9 +36,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
+    'django.core.context_processors.static',
     "basic.blog.context_processors.blog_settings",
     "navbar.context_processors.navbars",
-    'django.core.context_processors.static',
 )
 
 INSTALLED_APPS = (
@@ -88,7 +90,7 @@ INSTALLED_APPS = (
   'sentry.client')
 
 
-TINYMCE_JS_URL = 'js/tiny_mce/tiny_mce.js'
+TINYMCE_JS_URL = 'tiny_mce/tiny_mce.js'
 TINYMCE_DEFAULT_CONFIG = {
     'theme': "advanced",
     'cleanup_on_startup': True,
@@ -96,7 +98,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme_advanced_toolbar_location': "top",
 }
 
-DJANGO_WYSIWYG_MEDIA_URL = "js/ckeditor/"
+DJANGO_WYSIWYG_MEDIA_URL = "ckeditor/ckeditor.js"
 DJANGO_WYSIWYG_FLAVOR = "ckeditor"
 
 DEFAULT_HTTP_CACHE_CONTROL = {"public": True, "max_age": 300}

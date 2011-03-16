@@ -12,7 +12,7 @@
     {% endblock %}
 
     <meta name="copyright" content="{{ BLOG_SETTINGS.copyright }}" />
-    <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="{{ STATIC_URL }}mingus/img/favicon.ico" type="image/x-icon"/>
 
     {% block rss %}
         <link rel="alternate" type="application/rss+xml" title="{{ BLOG_SETTINGS.site_name }} main rss feed" href="{{ BLOG_SETTINGS.rss_url }}">
@@ -25,15 +25,15 @@
     {% endblock rss %}
 
     {% compress css %}
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/960.css" type="text/css" media="all" charset="utf-8">
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/prettify.css" type="text/css" media="all" charset="utf-8">
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/pygments.css" type="text/css" media="all" charset="utf-8">
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/base.css" type="text/css" media="all" charset="utf-8">
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/themes/basic.css" type="text/css" media="all" charset="utf-8">
-   {% endcompress %}
+        <link rel="stylesheet" href="{{ STATIC_URL }}mingus/css/960.css" type="text/css" media="all" charset="utf-8">
+        <link rel="stylesheet" href="{{ STATIC_URL }}mingus/css/prettify.css" type="text/css" media="all" charset="utf-8">
+        <link rel="stylesheet" href="{{ STATIC_URL }}mingus/css/pygments.css" type="text/css" media="all" charset="utf-8">
+        <link rel="stylesheet" href="{{ STATIC_URL }}mingus/css/base.css" type="text/css" media="all" charset="utf-8">
+        <link rel="stylesheet" href="{{ STATIC_URL }}mingus/css/themes/basic.css" type="text/css" media="all" charset="utf-8">
+    {% endcompress %}
 
    <!--[if IE 6]>
-   <script src="{{ STATIC_URL }}js/DD_belatedPNG_0.0.7a-min.js"></script>
+   <script src="{{ STATIC_URL }}mingus/js/DD_belatedPNG_0.0.7a-min.js"></script>
    <script>
    DD_belatedPNG.fix('#bleeder, .logo');
    </script>
@@ -197,10 +197,10 @@
     </div>
 
     {% block extra_body %}
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
         <script type="text/javascript" charset="utf-8">
         jQuery(function($) {
-            $.getScript('{{ STATIC_URL }}js/prettify.js', function(){
+            $.getScript('{{ STATIC_URL }}mingus/js/prettify.js', function(){
                 prettyPrint();
             });
         });
