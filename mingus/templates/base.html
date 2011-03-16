@@ -1,36 +1,35 @@
 {% load disqus_tags flatblock_tags cache navbar generic_content blog compress analytics elsewhere feeds i18n archive %}
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-  "http://www.w3.org/TR/html4/strict.dtd">
-
-<html lang="en">
+<!DOCTYPE html>
+<html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>{% block title %}{{ BLOG_SETTINGS.site_name }}{% endblock %}</title>
 
     {% block meta %}
-    <meta name="keywords" content="{{ BLOG_SETTINGS.meta_keywords }}">
-    <meta name="description" content="{{ BLOG_SETTINGS.meta_description }}">
-    <meta name="author" content="{{ BLOG_SETTINGS.author_name }}">
+        <meta name="keywords" content="{{ BLOG_SETTINGS.meta_keywords }}">
+        <meta name="description" content="{{ BLOG_SETTINGS.meta_description }}">
+        <meta name="author" content="{{ BLOG_SETTINGS.author_name }}">
     {% endblock %}
 
-     <meta name="copyright" content="{{ BLOG_SETTINGS.copyright }}" />
-     <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico" type="image/x-icon"/>
+    <meta name="copyright" content="{{ BLOG_SETTINGS.copyright }}" />
+    <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico" type="image/x-icon"/>
 
     {% block rss %}
-    <link rel="alternate" type="application/rss+xml" title="{{ BLOG_SETTINGS.site_name }} main rss feed" href="{{ BLOG_SETTINGS.rss_url }}">
-    <link rel="alternate" type="application/rss+xml" title="{{ BLOG_SETTINGS.site_name }} all entries feed" href="/feeds/all/">
-    <link rel="alternate" type="application/rss+xml" title="{{ BLOG_SETTINGS.site_name }} all posts feed" href="/feeds/latest/">
+        <link rel="alternate" type="application/rss+xml" title="{{ BLOG_SETTINGS.site_name }} main rss feed" href="{{ BLOG_SETTINGS.rss_url }}">
+        <link rel="alternate" type="application/rss+xml" title="{{ BLOG_SETTINGS.site_name }} all entries feed" href="/feeds/all/">
+        <link rel="alternate" type="application/rss+xml" title="{{ BLOG_SETTINGS.site_name }} all posts feed" href="/feeds/latest/">
 
-  {% if category %}<link rel="alternate" type="application/rss+xml" title="{{ BLOG_SETTINGS.site_name }} - {{ category }} posts" href="/feeds/categories/{{ category.title|lower }}">{% endif %}
-    {% endblock %}
+        {% if category %}
+            <link rel="alternate" type="application/rss+xml" title="{{ BLOG_SETTINGS.site_name }} - {{ category }} posts" href="/feeds/categories/{{ category.title|lower }}">
+        {% endif %}
+    {% endblock rss %}
 
     {% compress css %}
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/960.css" type="text/css" media="all" charset="utf-8">
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/prettify.css" type="text/css" media="all" charset="utf-8">
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/pygments.css" type="text/css" media="all" charset="utf-8">
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/base.css" type="text/css" media="all" charset="utf-8">
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/themes/basic.css" type="text/css" media="all" charset="utf-8">
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/960.css" type="text/css" media="all" charset="utf-8">
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/prettify.css" type="text/css" media="all" charset="utf-8">
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/pygments.css" type="text/css" media="all" charset="utf-8">
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/base.css" type="text/css" media="all" charset="utf-8">
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/themes/basic.css" type="text/css" media="all" charset="utf-8">
    {% endcompress %}
 
    <!--[if IE 6]>
@@ -50,7 +49,7 @@
     {% block analytics %}
         <!-- django-google-analytics -->
         {% cache 7200 "base.analytics" %}
-        {% analytics_async %}
+            {% analytics_async %}
         {% endcache %}
     {% endblock analytics %}
 
@@ -58,37 +57,33 @@
   </head>
 
 <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}blog{% endblock %}">
-<div id="bleeder"></div>
+    <div id="bleeder"></div>
 
-  <div id="body-container" class="clearfix">
-    {% block body %}
+    <div id="body-container" class="clearfix">
+        {% block body %}
 
-  <div id="header" class="clearfix">
-    <div id="logo">
-      <h1><a href="/" title="{{ BLOG_SETTINGS.site_name }}">{{ BLOG_SETTINGS.site_name }}</a></h1>
-    </div>
-    <!-- /logo -->
+        <div id="header" class="clearfix">
+            <div id="logo">
+                <h1><a href="/" title="{{ BLOG_SETTINGS.site_name }}">{{ BLOG_SETTINGS.site_name }}</a></h1>
+            </div>
 
-    <div id="nav">
-      {% cache 3600 "base.navbars" %}
-      {% navbars %}
-      {% endcache %}
-      <form action="/search/" method="GET"><input type="text" name="q" value="{{ search_term }}"><input type="submit" class="button" value="{% trans "Search" %}"></form>
-    </div>
-    <!-- /nav -->
+            <div id="nav">
+                {% cache 3600 "base.navbars" %}{% navbars %}{% endcache %}
+                <form action="/search/" method="get">
+                    <input type="search" name="q" value="{{ search_term }}">
+                    <input type="submit" class="button" value="{% trans ">
+                </form>
+            </div>
 
-  </div>
-  <!-- /header -->
+        </div>
 
       <div class="container_16">
         <div class="grid_9 suffix_1">
           <div class="content">
             {% block content %}{% endblock %}
           </div>
-          <!-- /content -->
 
         </div>
-        <!-- /grid_9 -->
 
         <div id="right-rail" class="grid_6">
 
@@ -142,13 +137,13 @@
           {% endcache %}
 
         {% cache 7200 "base.archive" %}
-        {% get_post_archive as dates %}
-        <h4>{% trans "Archive" %}</h4>
-        <ul class="archive">
-        {% for date in dates %}
-        <li><a href="{% url blog_archive_month date|date:"Y", date|date:"m" %}" title="{{ date|date:"F Y" }}">{{ date|date:"F Y" }}</a></li>
-        {% endfor %}
-        </ul>
+            {% get_post_archive_months as dates %}
+            <h4>{% trans "Archive" %}</h4>
+            <ul class="archive">
+            {% for date in dates %}
+            <li><a href="{% url blog_archive_month date|date:"Y", date|date:"m" %}" title="{{ date|date:"F Y" }}">{{ date|date:"F Y" }}</a></li>
+            {% endfor %}
+            </ul>
         {% endcache %}
 
           {% cache 3600 "base.blogroll" %}
@@ -188,13 +183,10 @@
           {% endcache %}
 
         </div>
-        <!-- /grid_6 -->
       </div>
-      <!-- /container_16 -->
 
       {% endblock %}
     </div>
-    <!-- /body-container -->
 
     <div id="footer">
       <p>
@@ -203,7 +195,6 @@
         {% endcache %}
       </p>
     </div>
-    <!-- /footer -->
 
     {% block extra_body %}
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js" type="text/javascript" charset="utf-8"></script>
