@@ -17,15 +17,6 @@ from mingus.core.feeds import AllEntries, ByTag
 
 admin.autodiscover()
 
-feeds = {
-    'latest': BlogPostsFeed,
-    'all': AllEntries,
-    'categories': BlogPostsByCategory,
-    'tags': ByTag,
-}
-#ex: /feeds/latest/
-#ex: /feeds/all/
-#ex: /feeds/categories/django/
 
 sitemaps = {
     'posts': BlogSitemap,
@@ -49,7 +40,11 @@ urlpatterns += patterns('',
     url(r'^quotes/(?P<slug>[-\w]+)/$', 'mingus.core.views.quote_detail', name='quote_detail'),
     url(r'robots.txt$', rules_list, name='robots_rule_list'),
     (r'^sitemap.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
-    (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
+    (r'^feeds/latest/$', BlogPostsFeed()),
+    (r'^feeds/all/$', AllEntries()),
+    (r'^feeds/categories/(?P<slug>[^/]+)/$', BlogPostsByCategory()),
+    (r'^feeds/tags/(?P<tag>[^/]+)/$', ByTag()),
+
     (r'^api/springsteen/posts/$', springsteen_results),
     (r'^api/springsteen/firehose/$', springsteen_firehose),
     (r'^api/springsteen/category/(?P<slug>[-\w]+)/$', springsteen_category),

@@ -1,4 +1,4 @@
-from django.contrib.syndication.feeds import Feed
+from django.contrib.syndication.views import Feed
 from django.core.urlresolvers import reverse
 
 from basic.blog.models import Settings
@@ -56,10 +56,8 @@ class ByTag(AllEntries):
     def title(self):
         return '%s all entries feed' % self.settings.site_name
 
-    def get_object(self, bits):
-        if len(bits) != 1:
-            raise ObjectDoesNotExist
-        return Tag.objects.get(name__exact=bits[0])
+    def get_object(self, request, tag):
+        return Tag.objects.get(name__exact=tag)
 
     def link(self, obj):
         if not obj:

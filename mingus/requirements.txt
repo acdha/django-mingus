@@ -12,7 +12,7 @@ django-robots==0.8.0
 django-extensions==0.6
 
 # Not on PyPI:
-http://github.com/acdha/django-basic-apps/tarball/master#egg=django-basic-apps
+http://github.com/acdha/django-basic-apps/tarball/63f50dc20b000a805221fd0742bc8aced1976bac#egg=django-basic-apps
 
 django-flatblocks==0.3.5
 django-disqus==0.1
