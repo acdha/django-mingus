@@ -6,17 +6,13 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '/admin_media/'
 
-# staticfiles app values
-STATIC_URL = '/media/mingus/'
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'media')
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'media', 'mingus'),
-)
-
 SITE_ID = 1
 ROOT_URLCONF = 'mingus.urls'
 TIME_ZONE = 'America/New_York'
 USE_I18N = False
+
+# NOTE: You should change this for production:
+HONEYPOT_FIELD_NAME = "django_mingus"
 
 TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, "templates"), )
 
@@ -33,14 +29,14 @@ MIDDLEWARE_CLASSES = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.core.context_processors.auth",
+    "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",
     "django.core.context_processors.i18n",
     "django.core.context_processors.media",
     "django.core.context_processors.request",
     "basic.blog.context_processors.blog_settings",
     "navbar.context_processors.navbars",
-    "staticfiles.context_processors.static_url",
+    'django.core.context_processors.static',
 )
 
 INSTALLED_APPS = (
@@ -52,9 +48,9 @@ INSTALLED_APPS = (
   'django.contrib.sitemaps',
   'django.contrib.flatpages',
   'django.contrib.redirects',
+  'django.contrib.staticfiles',
 
   'tagging',
-  'djangodblog',
   'disqus',
   'basic.inlines',
   'basic.blog',
@@ -81,7 +77,6 @@ INSTALLED_APPS = (
 
   'django_twitter',
   'django_bitly',
-  'staticfiles',
   'tinymce',
   'django_wysiwyg',
   'cropper',
@@ -93,7 +88,7 @@ INSTALLED_APPS = (
   'sentry.client')
 
 
-TINYMCE_JS_URL = STATIC_URL + 'js/tiny_mce/tiny_mce.js'
+TINYMCE_JS_URL = 'js/tiny_mce/tiny_mce.js'
 TINYMCE_DEFAULT_CONFIG = {
     'theme': "advanced",
     'cleanup_on_startup': True,
@@ -101,7 +96,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'theme_advanced_toolbar_location': "top",
 }
 
-DJANGO_WYSIWYG_MEDIA_URL = STATIC_URL + "js/ckeditor/"
+DJANGO_WYSIWYG_MEDIA_URL = "js/ckeditor/"
 DJANGO_WYSIWYG_FLAVOR = "ckeditor"
 
 DEFAULT_HTTP_CACHE_CONTROL = {"public": True, "max_age": 300}

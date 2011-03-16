@@ -11,6 +11,10 @@ LOCAL_DEV = DEBUG = TEMPLATE_DEBUG = False
 # sorl-thumbnail:
 THUMBNAIL_DEBUG = DEBUG
 
+# See http://docs.djangoproject.com/en/1.3/howto/static-files/
+STATIC_URL = '/static/mingus/'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+
 # django-contact-form
 DEFAULT_FROM_EMAIL = 'contactform@foo'
 

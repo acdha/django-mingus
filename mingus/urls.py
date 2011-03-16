@@ -80,9 +80,3 @@ urlpatterns += patterns('',
 
     (r'', include('basic.blog.urls')),
 )
-
-
-if settings.DEBUG or settings.LOCAL_DEV:
-    urlpatterns += patterns('',
-        (r'', include('staticfiles.urls')),
-    )

@@ -3,9 +3,7 @@ import warnings
 
 from mingus.settings import *
 
-LOCAL_DEV = True
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+LOCAL_DEV = DEBUG = TEMPLATE_DEBUG = True
 
 # sorl-thumbnail
 THUMBNAIL_DEBUG = True
@@ -17,8 +15,8 @@ MANAGERS = (('fooper', 'fooper@example.com'), )
 
 DATABASES = {
     'default': {
-        'ENGINE':'sqlite3',
-        'NAME': 'dev.db',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(PROJECT_ROOT, 'dev.db'),
         'USER':'',
         'PASSWORD': '',
         'HOST': '',
