@@ -78,5 +78,7 @@ urlpatterns += patterns('',
         view=proxy_search,
         name='proxy_search'),
 
+    (r'sentry/', include('sentry.urls')),
+
     (r'', include('basic.blog.urls')),
 )

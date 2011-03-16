@@ -1,44 +1,50 @@
-BeautifulSoup>=3.0.8
-django-db-log==1.0.1
-django-dbtemplates==0.6.1
-django-honeypot==0.3.0
-django-memcache-status==1.0.1
-django-navbar==0.3.0
-django-oembed==0.1.3
-django-robots==0.8.0
-django-slimmer==0.0.2
-django-staticfiles==0.2.0
-django-tagging==0.3
-django-tinymce
-django==1.2.1
-FeedParser==4.1
-Markdown==2.0.1
+django>=1.3.0
+BeautifulSoup==3.1.0.1
 PIL==1.1.7
-Pygments==1.1.1
 python-dateutil==1.4.1
-python-twitter
-sorl-thumbnail==3.2.5
+django-tagging==0.3
+Pygments==1.1.1
+feedparser==4.1
+Markdown==2.0.1
 textile==2.1.3
+django-robots==0.8.0
 
-http://bitbucket.org/discovery/django-bitly/get/dde6b4001b8a.bz2
-http://bitbucket.org/ubernostrum/django-template-utils/get/a47ea387c393.bz2
-http://github.com/acdha/django-basic-apps/tarball/master#egg=basic
-http://github.com/acdha/django-sugar/tarball/master#egg=sugar
-http://github.com/bartTC/django-markup/tarball/master#egg=django_markup
+django-extensions==0.6
 
-# This is the real upstream:
-# http://github.com/clintecker/django-google-analytics/tarball/d28bca4de2dc2a955138d36f2ae7ea86917e4867#egg=google_analytics
-# this version has working async code:
-http://github.com/acdha/django-google-analytics/tarball/b06fc598b213d0053bfa#google_analytics
+# Not on PyPI:
+http://github.com/acdha/django-basic-apps/tarball/master#egg=django-basic-apps
 
-http://github.com/kylef/django-request/tarball/master#egg=request
-http://github.com/mintchaos/django_compressor/tarball/master#egg=compressor
-http://github.com/montylounge/django-disqus/tarball/master#egg=disqus
-http://github.com/montylounge/django-proxy/tarball/master#egg=django_proxy
-http://github.com/montylounge/django-quoteme/tarball/master#egg=quoteme
-http://github.com/montylounge/django_cropper/tarball/master#egg=django-cropper
-http://github.com/pydanny/django-wysiwyg/tarball/master#egg=django-wysiwyg
-http://github.com/skevy/django-twitter/tarball/master#egg=django-twitter
-http://github.com/zerok/django-flatblocks/tarball/master#egg=flatblocks
-https://bitbucket.org/kmike/django-view-cache-utils/get/4408ad8f1751.bz2
-https://bitbucket.org/ubernostrum/django-contact-form/get/1d3791fa4dfb.bz2
+django-flatblocks==0.3.5
+django-disqus==0.1
+django-navbar==0.3.0
+django-sentry==1.6.5
+
+sorl-thumbnail==3.2.5
+django-oembed==0.1.3
+# django-template-utils
+http://github.com/montylounge/django-proxy/tarball/master#egg=django-proxy
+
+django-compressor==0.5.3
+django-markup==0.3
+
+# Not on PyPI:
+http://github.com/clintecker/django-google-analytics/tarball/master#egg=django-google-analytics
+
+django-view-cache-utils==0.1.1
+hg+http://bitbucket.org/ubernostrum/django-contact-form#egg=django-contact-form
+django-honeypot==0.3.0
+
+# Not on PyPI:
+http://github.com/montylounge/django-sugar/tarball/master#egg=django-sugar
+# Not on PyPI:
+http://github.com/montylounge/django-quoteme/tarball/master#egg=django-quoteme
+
+django-bitly==0.5
+django-tinymce==1.5.1.dev100
+django-wysiwyg==0.1.0
+django-slimmer==0.0.2
+django-cropper==0.1.4a
+django-dbtemplates==0.6.1
+django-memcache-status==1.0.1
+
+django-sentry==1.6.5
