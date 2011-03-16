@@ -10,12 +10,12 @@ It also assumes you have both subversion, mecurial, and git clients locally.
 * cd myblog
 * git clone git://github.com/montylounge/django-mingus.git
 * cd django-mingus/mingus
-* pip install -r stable-requirements.txt
+* pip install -r requirements.txt
 * ... wait a bit
-* mv local_settings.py.template local_settings.py
-* ./manage.py syncdb
-* .manage.py loaddata test_data.json
-* ./manage.py runserver
+* export DJANGO_SETTINGS_MODULE=mingus.settings_dev
+* django-admin.py syncdb
+* django-admin.py loaddata test_data.json
+* django-admin.py runserver
 
 By default the theme is set to the Basic theme.
 
