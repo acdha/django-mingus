@@ -15,7 +15,10 @@ django-extensions==0.6
 http://github.com/acdha/django-basic-apps/tarball/63f50dc20b000a805221fd0742bc8aced1976bac#egg=django-basic-apps
 
 django-flatblocks==0.3.5
-django-disqus==0.1
+
+# The PyPI version is quite old:
+https://github.com/arthurk/django-disqus/tarball/master#egg=django-disqus
+
 django-navbar==0.3.0
 django-sentry==1.6.5
 
