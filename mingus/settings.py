@@ -6,7 +6,6 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, 'static'), )
-ADMIN_MEDIA_PREFIX = '/admin_media/'
 
 SITE_ID = 1
 ROOT_URLCONF = 'mingus.urls'
